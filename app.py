@@ -1,6 +1,7 @@
 import streamlit as st
 import sys
 from pathlib import Path
+from modules.navegacion import mostrar_menu_lateral
 
 # Agregar el directorio modules al path
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
@@ -14,6 +15,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+mostrar_menu_lateral()
 
 # CSS personalizado
 st.markdown("""
