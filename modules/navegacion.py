@@ -1,51 +1,51 @@
 import streamlit as st
-import os
 
 def mostrar_menu_lateral():
-    # 1. Verificamos si hay rol
-    if 'rol' not in st.session_state:
+    """
+    Esta función dibuja el menú lateral.
+    Debe importarse y llamarse en CADA página de la app.
+    """
+    # 1. Recuperamos variables (con tus nombres correctos)
+    rol = st.session_state.get('user_role', '')
+    nombre = st.session_state.get('user_name', 'Usuario')
+
+    # Si no hay rol, no dibujamos nada (probablemente no se ha logueado)
+    if not rol:
         return
 
-    rol = st.session_state['rol']
-    
-    # --- ZONA DE INFORMACIÓN (Siempre visible) ---
     with st.sidebar:
-        st.write(f"👤 Usuario: **{st.session_state.get('nombre', 'User')}**")
-        
-        # --- DIAGNÓSTICO (Esto nos dirá la verdad) ---
+        # --- PARTE SUPERIOR: USUARIO ---
+        st.write(f"👋 Hola, **{nombre}**")
+        st.caption(f"Rol: {rol}")
         st.divider()
-        st.warning(f"🕵️ DIAGNÓSTICO: El rol exacto es: '{rol}'")
+
+        # --- PARTE CENTRAL: NAVEGACIÓN ---
+        st.markdown("### 🧭 Menú")
         
-        # Verificamos si el archivo existe realmente
-        archivo_demo = "pages/Catalogo.py"
-        if os.path.exists(archivo_demo):
-            st.success(f"✅ Archivo {archivo_demo} encontrado.")
-        else:
-            st.error(f"❌ NO SE ENCUENTRA: {archivo_demo}")
-        st.divider()
-        # ---------------------------------------------
+        # Normalizamos para evitar errores de mayúsculas
+        rol_seguro = str(rol).strip().upper()
 
-        st.header("Menú de Navegación")
-
-        # 2. PRUEBA DE FUEGO: Botón sin condiciones (Debe salir SÍ o SÍ)
-        st.page_link("pages/Catalogo.py", label="Prueba Directa Catalogo", icon="🔥")
-
-        # 3. LÓGICA CONDICIONAL
-        # Usamos .strip() para quitar espacios invisibles
-        if str(rol).strip() == "Cliente":
-            st.info("Entré al IF de CLIENTE")
-            st.page_link("pages/Catalogo.py", label="Ir al Catálogo", icon="🛒")
-
-        elif str(rol).strip() == "Admin":
-            st.info("Entré al IF de ADMIN")
+        # CLIENTE
+        if rol_seguro == "CLIENTE":
+            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
+        
+        # ADMIN (Usamos 'in' por si dice 'Super Admin' o algo así)
+        elif "ADMIN" in rol_seguro:
             st.page_link("app.py", label="Inicio", icon="🏠")
+            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
             st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
-            # Agrega aquí el resto de tus páginas...
-
+            st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
+            st.page_link("pages/Dashboard_Anomalias.py", label="Anomalías", icon="🚨")
+            st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
+            st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
+            st.page_link("pages/Configuracion_ML.py", label="Config ML", icon="🤖")
+        
         else:
-            st.error("⚠️ El rol no coincide con ningún IF")
+            st.warning(f"Rol '{rol}' sin accesos configurados.")
 
+        # --- PARTE INFERIOR: SALIR ---
         st.divider()
-        if st.button("Cerrar sesión"):
+        if st.button("🚪 Cerrar sesión", key="btn_logout_nav"): 
+            # Nota: key único para evitar conflicto con otros botones
             st.session_state.clear()
             st.rerun()
