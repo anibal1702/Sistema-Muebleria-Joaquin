@@ -15,7 +15,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-mostrar_menu_lateral()
 
 # CSS personalizado
 st.markdown("""
@@ -119,7 +118,7 @@ def main_app():
         ### 👋 Hola, {st.session_state.user_name}
         **Rol:** {st.session_state.user_role.capitalize() if st.session_state.user_role else 'Cliente'}
         """)
-        
+        mostrar_menu_lateral()
         st.divider()
         
         if st.button("🚪 Cerrar sesión", use_container_width=True, type="secondary"):
