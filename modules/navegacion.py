@@ -25,7 +25,7 @@ def mostrar_menu_lateral():
             st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
         # 3. BOTÓN DE SALIDA
             st.divider()
-            st.button("🚪 Cerrar sesión", use_container_width=True):
+if st.button("🚪 Cerrar sesión", use_container_width=True):
             st.session_state.clear()
             st.rerun()
         
@@ -42,6 +42,7 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
 
