@@ -5,11 +5,13 @@ import streamlit as st
 import pandas as pd
 import sys
 from pathlib import Path
+from modules.navegacion import mostrar_menu_lateral
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
 from conexion_db import export_eventos_to_excel
 
 st.set_page_config(page_title="Carga de Datos", page_icon="📥", layout="wide")
+mostrar_menu_lateral()
 
 if not st.session_state.get('logged_in', False):
     st.warning("⚠️ Por favor inicie sesión primero")
@@ -103,4 +105,5 @@ with tab2:
         
         except Exception as e:
             st.error(f"Error al procesar archivo: {e}")
+
 
