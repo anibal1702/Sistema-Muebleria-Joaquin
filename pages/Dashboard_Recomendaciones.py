@@ -4,6 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import sys
 from pathlib import Path
+from modules.navegacion import mostrar_menu_lateral
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
 
@@ -11,6 +12,7 @@ from conexion_db import get_connection
 from motor_recomendacion import entrenar_motor_recomendacion
 
 st.set_page_config(page_title="Dashboard Recomendaciones", page_icon="🎯", layout="wide")
+mostrar_menu_lateral()
 
 # Verificar login y rol
 if not st.session_state.get('logged_in', False):
