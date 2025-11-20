@@ -28,7 +28,7 @@ def mostrar_menu_lateral():
         elif "ADMIN" in rol_seguro:
             st.page_link("app.py", label="Inicio", icon="🏠")
             st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-            st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
+            st.page_link("pages/Dashboard_Demanda.py", label="Dashborad demanda", icon="📊")
             st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
             st.page_link("pages/Dashboard_Anomalias.py", label="Anomalías", icon="🚨")
             st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
@@ -37,5 +37,6 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
