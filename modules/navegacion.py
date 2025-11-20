@@ -25,8 +25,8 @@ def mostrar_menu_lateral():
             st.page_link("pages/Catalogo.py", label="Abrir tienda virtual", icon="🛒")
             if st.button("🚪 Cerrar sesión", use_container_width=True, type="secondary"):
                 for key in list(st.session_state.keys()):
-                del st.session_state[key]
-                st.rerun()
+                    del st.session_state[key]
+                    st.rerun()
         
         # ADMIN (Usamos 'in' por si dice 'Super Admin' o algo así)
         elif "ADMIN" in rol_seguro:
@@ -41,6 +41,7 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
 
