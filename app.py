@@ -163,19 +163,7 @@ def login_page():
 def main_app():
     """Aplicación principal después del login"""
     
-    # Sidebar
-    with st.sidebar:
-        st.markdown(f"""
-        ### 👋 Hola, {st.session_state.user_name}
-        **Rol:** {st.session_state.user_role.capitalize() if st.session_state.user_role else 'Cliente'}
-        """)
-        
-        st.divider()
-        
-        if st.button("🚪 Cerrar sesión", use_container_width=True, type="secondary"):
-            for key in list(st.session_state.keys()):
-                del st.session_state[key]
-            st.rerun()
+   
     
     # Contenido principal
     st.markdown("""
