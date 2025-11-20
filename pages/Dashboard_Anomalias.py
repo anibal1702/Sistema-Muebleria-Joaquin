@@ -4,6 +4,7 @@ import plotly.express as px
 import sys
 from pathlib import Path
 from datetime import datetime
+from modules.navegacion import mostrar_menu_lateral
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
 
@@ -11,6 +12,7 @@ from anomalia import detectar_anomalias_en_ventas
 from conexion_db import get_connection
 
 st.set_page_config(page_title="Centro de Alertas", page_icon="🚨", layout="wide")
+mostrar_menu_lateral()
 
 # Verificar login y rol
 if not st.session_state.get('logged_in', False):
