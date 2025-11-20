@@ -14,13 +14,9 @@ def mostrar_menu_lateral():
         return
 
     with st.sidebar:
-        # --- PARTE SUPERIOR: USUARIO ---
-        st.write(f"👋 Hola, **{nombre}**")
-        st.caption(f"Rol: {rol}")
-        st.divider()
 
         # --- PARTE CENTRAL: NAVEGACIÓN ---
-        st.markdown("### 🧭 Menú")
+        st.markdown("Menú")
         
         # Normalizamos para evitar errores de mayúsculas
         rol_seguro = str(rol).strip().upper()
@@ -43,9 +39,3 @@ def mostrar_menu_lateral():
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
 
-        # --- PARTE INFERIOR: SALIR ---
-        st.divider()
-        if st.button("🚪 Cerrar sesión", key="btn_logout_nav"): 
-            # Nota: key único para evitar conflicto con otros botones
-            st.session_state.clear()
-            st.rerun()
