@@ -16,7 +16,6 @@ def mostrar_menu_lateral():
     with st.sidebar:
 
         # --- PARTE CENTRAL: NAVEGACIÓN ---
-        st.markdown("Menú")
         
         # Normalizamos para evitar errores de mayúsculas
         rol_seguro = str(rol).strip().upper()
@@ -38,4 +37,5 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
