@@ -29,7 +29,7 @@ def mostrar_menu_lateral():
             st.page_link("app.py", label="Inicio", icon="🏠")
             st.page_link("pages/Catalogo.py", label="Tienda virtual", icon="🛒")
             st.page_link("pages/Dashboard_Demanda.py", label="Dashborad demanda", icon="📊")
-            st.page_link("pages/Dashboard_Recomendaciones.py", label="Dash. Recomendaciones", icon="🎯")
+            st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
             st.page_link("pages/Dashboard_Anomalias.py", label="Dashboard anomalías", icon="🚨")
             st.page_link("pages/Monitor_Eventos.py", label="Monitor de eventos", icon="👀")
             st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
@@ -37,6 +37,7 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
 
