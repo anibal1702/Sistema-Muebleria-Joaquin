@@ -1,11 +1,61 @@
 import streamlit as st
 import sys
 from pathlib import Path
-from modules.navegacion import mostrar_menu_lateral
+#from modules.navegacion import mostrar_menu_lateral
 
 # Agregar el directorio modules al path
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
+import streamlit as st
+import os
 
+# --- 1. DEFINIMOS EL MENÚ AQUÍ MISMO (Sin archivos externos) ---
+def mostrar_menu_lateral():
+    if 'rol' not in st.session_state:
+        return
+
+    rol = st.session_state['rol']
+    nombre = st.session_state.get('nombre', 'Usuario')
+
+    with st.sidebar:
+        st.write(f"👤 **{nombre}**")
+        st.caption(f"Rol: {rol}")
+        st.divider()
+
+        # --- PRUEBA DE FUEGO (Si ves esto, el código actualizó) ---
+        st.info(f"🔎 Debug: El sistema detecta rol '{rol}'")
+        
+        # --- MENÚ CLIENTE ---
+        if str(rol).strip() == "Cliente":
+            st.header("🛒 Tienda")
+            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
+
+        # --- MENÚ ADMIN ---
+        elif str(rol).strip() == "Admin":
+            st.header("⚙️ Administración")
+            st.page_link("app.py", label="Inicio", icon="🏠")
+            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
+            st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
+            st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
+            st.page_link("pages/Dashboard_Anomalias.py", label="Anomalías", icon="🚨")
+            st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
+            st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
+            st.page_link("pages/Configuracion_ML.py", label="Config ML", icon="🤖")
+
+        st.divider()
+        if st.button("Cerrar sesión"):
+            st.session_state.clear()
+            st.rerun()
+# -----------------------------------------------------------
+
+# --- 2. TU CÓDIGO NORMAL DE APP.PY EMPIEZA AQUÍ ---
+st.set_page_config(page_title="Login", layout="centered")
+
+# LLAMAMOS A LA FUNCIÓN QUE ACABAMOS DE CREAR ARRIBA
+mostrar_menu_lateral()
+
+st.title("Bienvenido al Sistema")
+
+# ... (El resto de tu código de Login sigue igual abajo) ...
 from conexion_db import verify_user, create_user
 
 # Configuración de la página
