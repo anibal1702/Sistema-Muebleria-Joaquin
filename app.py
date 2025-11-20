@@ -161,57 +161,51 @@ def login_page():
                         st.warning("Por favor complete todos los campos")
 
 def main_app():
-        """Aplicación principal después del login"""
-        def main_app():
-        """Aplicación principal con menú integrado"""
-        import streamlit as st # Aseguramos el import aquí por si acaso
+    import streamlit as st
+
+    # --- RECUPERAR VARIABLES DE SESIÓN ---
+    # Usamos tus nombres de variable: user_role y user_name
+    rol = st.session_state.get('user_role', '')
+    nombre = st.session_state.get('user_name', 'Usuario')
+
+    # --- BARRA LATERAL ---
+    with st.sidebar:
+        # 1. INFORMACIÓN DE USUARIO
+        st.write(f"👋 Hola, **{nombre}**")
+        st.caption(f"Rol: {rol}")
+        st.divider()
+
+        # 2. MENÚ DE NAVEGACIÓN
+        st.markdown("### 🧭 Menú")
         
-        # 1. Recuperar tus variables (usando tus nombres originales)
-        # Usamos .get() para que no de error si está vacío
-        rol = st.session_state.get('user_role', '') 
-        nombre = st.session_state.get('user_name', 'Usuario')
+        # Convertimos a texto y mayúsculas para evitar errores
+        rol_seguro = str(rol).strip().upper()
+
+        if rol_seguro == "CLIENTE":
+            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
         
-        # 2. Construir la Barra Lateral
-        with st.sidebar:
-            # --- TU CABECERA ORIGINAL ---
-            st.markdown(f"""
-            ### 👋 Hola, {nombre}
-            **Rol:** {rol}
-            """)
-            st.divider()
-    
-            # --- NAVEGACIÓN (La parte que faltaba) ---
-            # Normalizamos el rol a mayúsculas para evitar errores (Admin/admin)
-            rol_normalizado = str(rol).strip().upper()
-    
-            st.markdown("### 🧭 Menú")
-            
-            # CASO CLIENTE (Ajusta 'CLIENTE' si en tu BD es distinto)
-            if rol_normalizado == "CLIENTE":
-                st.page_link("pages/Catalogo.py", label="Ir al Catálogo", icon="🛒")
-            
-            # CASO ADMIN
-            elif "ADMIN" in rol_normalizado: 
-                st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-                st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
-                st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
-                st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
-                st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
-                # ... agrega aquí el resto ...
-                
-            # SI NO HAY ROL (O ERROR)
-            else:
-                st.warning(f"Rol detectado: {rol}. No coincide con permisos.")
-    
-            # --- TU BOTÓN DE SALIR ORIGINAL ---
-            st.divider()
-            if st.button("🚪 Cerrar sesión", use_container_width=True):
-                st.session_state.clear()
-                st.rerun()
-    
-        # 3. PÁGINA DE BIENVENIDA (Lo que sale a la derecha)
-        st.title(f"Bienvenido al Dashboard, {nombre}")
-        st.info("👈 Usa el menú de la izquierda para navegar.")
+        elif "ADMIN" in rol_seguro:
+            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
+            st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
+            st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
+            st.page_link("pages/Dashboard_Anomalias.py", label="Anomalías", icon="🚨")
+            st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
+            st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
+            st.page_link("pages/Configuracion_ML.py", label="Config ML", icon="🤖")
+        
+        else:
+            st.warning("Sin permisos de navegación.")
+
+        # 3. BOTÓN DE SALIDA
+        st.divider()
+        if st.button("🚪 Cerrar sesión", use_container_width=True):
+            st.session_state.clear()
+            st.rerun()
+
+    # --- CONTENIDO PRINCIPAL DE LA PÁGINA ---
+    st.title("Panel Principal")
+    st.write(f"Bienvenido al sistema, {nombre}.")
+    st.info("Selecciona una opción del menú lateral para comenzar.")
    
     
     # Contenido principal
