@@ -5,57 +5,7 @@ from modules.navegacion import mostrar_menu_lateral
 
 # Agregar el directorio modules al path
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
-import streamlit as st
-import os
 
-# --- 1. DEFINIMOS EL MENÚ AQUÍ MISMO (Sin archivos externos) ---
-def mostrar_menu_lateral():
-    if 'rol' not in st.session_state:
-        return
-
-    rol = st.session_state['rol']
-    nombre = st.session_state.get('nombre', 'Usuario')
-
-    with st.sidebar:
-        st.write(f"👤 **{nombre}**")
-        st.caption(f"Rol: {rol}")
-        st.divider()
-
-        # --- PRUEBA DE FUEGO (Si ves esto, el código actualizó) ---
-        st.info(f"🔎 Debug: El sistema detecta rol '{rol}'")
-        
-        # --- MENÚ CLIENTE ---
-        if str(rol).strip() == "Cliente":
-            st.header("🛒 Tienda")
-            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-
-        # --- MENÚ ADMIN ---
-        elif str(rol).strip() == "Admin":
-            st.header("⚙️ Administración")
-            st.page_link("app.py", label="Inicio", icon="🏠")
-            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-            st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
-            st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
-            st.page_link("pages/Dashboard_Anomalias.py", label="Anomalías", icon="🚨")
-            st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
-            st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
-            st.page_link("pages/Configuracion_ML.py", label="Config ML", icon="🤖")
-
-        st.divider()
-        if st.button("Cerrar sesión"):
-            st.session_state.clear()
-            st.rerun()
-# -----------------------------------------------------------
-
-# --- 2. TU CÓDIGO NORMAL DE APP.PY EMPIEZA AQUÍ ---
-st.set_page_config(page_title="Login", layout="centered")
-
-# LLAMAMOS A LA FUNCIÓN QUE ACABAMOS DE CREAR ARRIBA
-mostrar_menu_lateral()
-
-st.title("Bienvenido al Sistema")
-
-# ... (El resto de tu código de Login sigue igual abajo) ...
 from conexion_db import verify_user, create_user
 
 # Configuración de la página
@@ -161,52 +111,21 @@ def login_page():
                         st.warning("Por favor complete todos los campos")
 
 def main_app():
-    import streamlit as st
-
-    # --- RECUPERAR VARIABLES DE SESIÓN ---
-    # Usamos tus nombres de variable: user_role y user_name
-    rol = st.session_state.get('user_role', '')
-    nombre = st.session_state.get('user_name', 'Usuario')
-
-    # --- BARRA LATERAL ---
+    """Aplicación principal después del login"""
+    
+    # Sidebar
     with st.sidebar:
-        # 1. INFORMACIÓN DE USUARIO
-        st.write(f"👋 Hola, **{nombre}**")
-        st.caption(f"Rol: {rol}")
+        st.markdown(f"""
+        ### 👋 Hola, {st.session_state.user_name}
+        **Rol:** {st.session_state.user_role.capitalize() if st.session_state.user_role else 'Cliente'}
+        """)
+        
         st.divider()
-
-        # 2. MENÚ DE NAVEGACIÓN
-        st.markdown("### 🧭 Menú")
         
-        # Convertimos a texto y mayúsculas para evitar errores
-        rol_seguro = str(rol).strip().upper()
-
-        if rol_seguro == "CLIENTE":
-            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-        
-        elif "ADMIN" in rol_seguro:
-            st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-            st.page_link("pages/Dashboard_Demanda.py", label="Demanda", icon="📊")
-            st.page_link("pages/Dashboard_Recomendaciones.py", label="Recomendaciones", icon="🎯")
-            st.page_link("pages/Dashboard_Anomalias.py", label="Anomalías", icon="🚨")
-            st.page_link("pages/Monitor_Eventos.py", label="Monitor", icon="👀")
-            st.page_link("pages/Carga_Datos.py", label="Carga Datos", icon="📤")
-            st.page_link("pages/Configuracion_ML.py", label="Config ML", icon="🤖")
-        
-        else:
-            st.warning("Sin permisos de navegación.")
-
-        # 3. BOTÓN DE SALIDA
-        st.divider()
-        if st.button("🚪 Cerrar sesión", use_container_width=True):
-            st.session_state.clear()
+        if st.button("🚪 Cerrar sesión", use_container_width=True, type="secondary"):
+            for key in list(st.session_state.keys()):
+                del st.session_state[key]
             st.rerun()
-
-    # --- CONTENIDO PRINCIPAL DE LA PÁGINA ---
-    st.title("Panel Principal")
-    st.write(f"Bienvenido al sistema, {nombre}.")
-    st.info("Selecciona una opción del menú lateral para comenzar.")
-   
     
     # Contenido principal
     st.markdown("""
@@ -305,3 +224,4 @@ if st.session_state.logged_in:
     main_app()
 else:
     login_page()
+
