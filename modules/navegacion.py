@@ -23,13 +23,7 @@ def mostrar_menu_lateral():
         # CLIENTE
         if rol_seguro == "CLIENTE":
             st.page_link("pages/Catalogo.py", label="Abrir tienda virtual", icon="🛒")
-            # 2. Divisor y Botón (¡Fíjate que tienen sangría a la derecha!)
             st.divider()
-            
-            # El 'if' es obligatorio para que el botón funcione
-            if st.button("🚪 Cerrar sesión", key="logout_cliente", use_container_width=True, type="secondary"):
-                st.session_state.clear() # Esto borra todo limpio
-                st.rerun()
         
         # ADMIN (Usamos 'in' por si dice 'Super Admin' o algo así)
         elif "ADMIN" in rol_seguro:
@@ -44,6 +38,7 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
 
