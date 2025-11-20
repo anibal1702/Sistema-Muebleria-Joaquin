@@ -118,6 +118,7 @@ def main_app():
         ### 👋 Hola, {st.session_state.user_name}
         **Rol:** {st.session_state.user_role.capitalize() if st.session_state.user_role else 'Cliente'}
         """)
+        st.divider()
         mostrar_menu_lateral()
         st.divider()
         
