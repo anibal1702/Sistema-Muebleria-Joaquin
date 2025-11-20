@@ -23,11 +23,6 @@ def mostrar_menu_lateral():
         # CLIENTE
         if rol_seguro == "CLIENTE":
             st.page_link("pages/Catalogo.py", label="Catálogo", icon="🛒")
-        # 3. BOTÓN DE SALIDA
-            st.divider()
-if st.button("🚪 Cerrar sesión", use_container_width=True):
-            st.session_state.clear()
-            st.rerun()
         
         # ADMIN (Usamos 'in' por si dice 'Super Admin' o algo así)
         elif "ADMIN" in rol_seguro:
@@ -42,6 +37,7 @@ if st.button("🚪 Cerrar sesión", use_container_width=True):
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
 
