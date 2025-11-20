@@ -22,6 +22,7 @@ def mostrar_menu_lateral():
 
         # CLIENTE
         if rol_seguro == "CLIENTE":
+            st.page_link("app.py", label="Inicio", icon="🏠")
             st.page_link("pages/Catalogo.py", label="Abrir tienda virtual", icon="🛒")
         
         # ADMIN (Usamos 'in' por si dice 'Super Admin' o algo así)
@@ -37,6 +38,7 @@ def mostrar_menu_lateral():
         
         else:
             st.warning(f"Rol '{rol}' sin accesos configurados.")
+
 
 
 
