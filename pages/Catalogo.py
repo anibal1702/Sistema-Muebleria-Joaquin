@@ -1,6 +1,8 @@
 import streamlit as st
 import sys
 from pathlib import Path
+from modules.navegacion import mostrar_menu_lateral
+
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
 
@@ -8,6 +10,7 @@ from conexion_db import get_all_products, registrar_venta, get_recomendaciones_u
 from logger import EventLogger
 
 st.set_page_config(page_title="Catálogo", page_icon="🛒", layout="wide")
+mostrar_menu_lateral()
 
 # Verificar login
 if not st.session_state.get('logged_in', False):
